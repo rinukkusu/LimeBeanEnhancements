@@ -10,10 +10,10 @@ namespace LimeBeanEnhancements.Attributes
 		public bool SaveToDatabase { get; private set; }
 
 		public BeanPropertyAttribute(string column, int position = 1, bool saveToDatabase = true)
-	 {
+		{
 			Column = column;
 			Position = position;
 			SaveToDatabase = saveToDatabase;
-	 }
+		}
 	}
 }
