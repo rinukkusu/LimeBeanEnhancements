@@ -1,6 +1,6 @@
 # LimeBeanEnhancements
 
-## How to subclass
+## Subclassing
 ```cs
 [BeanTable("user")]
 public class User : EnhancedBean<User>
@@ -14,7 +14,7 @@ public class User : EnhancedBean<User>
 }
 ```
 
-## How to use
+## Usage
 ```cs
 // Getting a new instance of the User model
 User user = _beanApi.Dispense<User>();
