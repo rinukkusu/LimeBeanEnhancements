@@ -1,16 +1,29 @@
 {
   "version": "1.0.0-*",
+  "title": "LimeBeanEnhancements",
+  "authors": ["Max 'rinukkusu' Riegler"],
 
-  "dependencies": {
-    "LimeBean": "1.2.6",
-    "NETStandard.Library": "1.6.0",
-    "Newtonsoft.Json": "9.0.1",
-    "System.Runtime.Serialization.Xml": "4.1.1"
-  },
+  
 
   "frameworks": {
+    "net45": {
+      "frameworkAssemblies": {
+        "System.Runtime.Serialization": ""
+      },
+      "dependencies": {
+        "LimeBean": "1.2.6",
+        "Newtonsoft.Json": "9.0.1",
+        "System.Runtime.Serialization.Xml": "4.0.0"
+      }
+    },
     "netstandard1.6": {
-      "imports": "dnxcore50"
+      "imports": "dnxcore50",
+      "dependencies": {
+        "LimeBean": "1.2.6",
+        "NETStandard.Library": "1.6.0",
+        "Newtonsoft.Json": "9.0.1",
+        "System.Runtime.Serialization.Xml": "4.1.1"
+      }
     }
   }
 }
