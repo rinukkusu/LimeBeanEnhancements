@@ -67,10 +67,7 @@ namespace LimeBeanEnhancements
 			foreach (var property in properties)
 			{
 				var attribute = property.GetCustomAttribute<BeanPropertyAttribute>();
-				if (attribute.Column == "id" && Id == 0)
-				{
-				}
-				else
+				if (!(attribute.Column == "id" && Id == 0))
 				{
 					BeanRelationAttribute relationAttribute = property.GetCustomAttribute<BeanRelationAttribute>();
 
