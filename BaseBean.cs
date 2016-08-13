@@ -40,17 +40,6 @@ namespace LimeBeanEnhancements
 			throw new ArgumentException("No BeanTableAttribute on class.");
 		}
 
-		private static string GetRelatedKind(Type type)
-		{
-			var attribute = type.GetTypeInfo().GetCustomAttribute<BeanTableAttribute>();
-			if (attribute != null)
-			{
-				return attribute.Table;
-			}
-
-			throw new ArgumentException("No BeanTableAttribute on class.");
-		}
-
 		private static List<PropertyInfo> SortProperties(PropertyInfo[] properties)
 		{
 			var propertyList = properties.ToList();
@@ -82,13 +71,12 @@ namespace LimeBeanEnhancements
 
 				if (relationAttribute != null)
 				{
-					ulong id = bean[propertyAttribute.Column] != null ? UInt64.Parse(bean[propertyAttribute.Column].ToString()) : 0;
-					if (id > 0)
-					{
-						MethodInfo methodInfo = relationAttribute.RelatedBeanType.GetTypeInfo().BaseType.GetTypeInfo().GetMethod("Load", BindingFlags.Public | BindingFlags.Static);
-						var relatedInstance = methodInfo.Invoke(null, new object[] { id });
-						property.SetValue(instance, relatedInstance);
-					}
+					ulong id = bean[propertyAttribute.Column] != null ? ulong.Parse(bean[propertyAttribute.Column].ToString()) : 0;
+					if (id <= 0) continue;
+
+					MethodInfo methodInfo = relationAttribute.RelatedBeanType.GetTypeInfo().BaseType.GetTypeInfo().GetMethod("Load", BindingFlags.Public | BindingFlags.Static);
+					var relatedInstance = methodInfo.Invoke(null, new object[] { id });
+					property.SetValue(instance, relatedInstance);
 				}
 				else
 				{
@@ -147,26 +135,25 @@ namespace LimeBeanEnhancements
 
 		public static T Load(ulong id)
 		{
+			if (_beanApi == null) return default(T);
+
 			Bean bean = _beanApi.Load(GetKind(), id);
 			return BeanToClass(bean);
 		}
 
 		public static ulong Save(IBaseBean instance)
 		{
+			if (_beanApi == null) return default(ulong);
+
 			Bean bean = ClassToBean(instance);
-			return (ulong)_beanApi.Store(bean);
+			return (ulong)bean["id"];
 		}
 
 		public static IEnumerable<T> GetAll()
 		{
-			Bean[] beans = _beanApi.Find(false, GetKind());
-			IList<T> returnList = new List<T>();
-			foreach (var bean in beans)
-			{
-				returnList.Add(BeanToClass(bean));
-			}
+			Bean[] beans = _beanApi?.Find(false, GetKind());
 
-			return returnList;
+			return beans?.Select(BeanToClass).ToList();
 		}
 	}
 }
