@@ -45,6 +45,7 @@
     <Compile Include="Attributes\BeanPropertyAttribute.cs" />
     <Compile Include="Attributes\BeanRelationAttribute.cs" />
     <Compile Include="Attributes\BeanTableAttribute.cs" />
+    <Compile Include="BeanRepository.cs" />
     <Compile Include="EnhancedBean.cs" />
     <Compile Include="Extensions\BeanApiExtensions.cs" />
     <Compile Include="Extensions\PropertyInfoListExtensions.cs" />

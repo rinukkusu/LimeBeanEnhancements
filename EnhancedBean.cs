@@ -41,7 +41,7 @@ namespace LimeBeanEnhancements
 
 				if (relationAttribute != null)
 				{
-					ulong id = this[propertyAttribute.Column] != null ? ulong.Parse(this[propertyAttribute.Column].ToString()) : 0;
+                    long id = this[propertyAttribute.Column] != null ? long.Parse(this[propertyAttribute.Column].ToString()) : 0;
 					if (id <= 0) continue;
 
 					BeanTableAttribute beanTableAttribute = property.PropertyType.GetBeanTableAttribute();
@@ -55,7 +55,14 @@ namespace LimeBeanEnhancements
 				}
 				else
 				{
-					property.SetValue(this, this[propertyAttribute.Column]);
+                    object value = this[propertyAttribute.Column];
+
+                    if (property.PropertyType == typeof(string))
+                    {
+                        value = value.ToString();
+                    }
+
+					property.SetValue(this, value);
 				}
 			}
 		}
@@ -77,7 +84,7 @@ namespace LimeBeanEnhancements
 
 						if (relatedInstance != null)
 						{
-							ulong id = (ulong)GetApi().Store(relatedInstance);
+                            long id = (long)GetApi().Store(relatedInstance);
 							this[attribute.Column] = id;
 						}
 						else
