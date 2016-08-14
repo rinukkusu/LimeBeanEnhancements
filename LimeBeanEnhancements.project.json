@@ -1,8 +1,12 @@
-{
-  "runtimes": {    
-    "win": {}  
-  },  
-  "frameworks": {    
-    "net45": {}  
+﻿{
+  "runtimes": {
+    "win": {}
+  },
+  "frameworks": {
+    "net45": {}
+  },
+  "dependencies": {
+    "LimeBean": "1.2.6",
+    "Newtonsoft.Json": "9.0.1"
   }
 }
